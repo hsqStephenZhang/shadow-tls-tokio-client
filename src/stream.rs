@@ -58,6 +58,7 @@ impl<T: ReadExtBase> ReadExt for T {
     ) -> Poll<std::io::Result<()>> {
         let (raw, read_buf, read_pos) = self.prepare();
         read_buf.reserve(size);
+        // # safety: read_buf has reserved `size`
         unsafe { read_buf.set_len(size) }
         tracing::debug!(
             "poll read exact: {}, read_pos: {}, buf: {}",
@@ -67,6 +68,7 @@ impl<T: ReadExtBase> ReadExt for T {
         );
         loop {
             if *read_pos < size {
+                // # safety: read_pos<size==read_buf.len(), and read_buf[0..read_pos] is initialized
                 let dst = unsafe {
                     &mut *((&mut read_buf[*read_pos..size]) as *mut _ as *mut [MaybeUninit<u8>])
                 };
