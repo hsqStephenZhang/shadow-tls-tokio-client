@@ -19,7 +19,7 @@ use crate::utils::{resolve, Hmac};
 pub struct Opts {
     pub fastopen: bool,
     pub sni: String,
-    pub strcit: bool,
+    pub strict: bool,
 }
 
 pub struct Connector {
@@ -84,7 +84,7 @@ impl Connector {
             .as_ref()
             .map(|s| (s.server_random, s.hmac.to_owned()));
 
-        if (!authorized || maybe_server_random_and_hamc.is_none()) && opts.strcit {
+        if (!authorized || maybe_server_random_and_hamc.is_none()) && opts.strict {
             tracing::warn!("V3 strict enabled: traffic hijacked or TLS1.3 is not supported, perform fake request");
 
             tls.get_mut().0.fake_request = true;
@@ -193,7 +193,7 @@ mod tests {
             .connect(Opts {
                 fastopen: false,
                 sni: "captive.apple.com".to_owned(),
-                strcit: true,
+                strict: true,
             })
             .await?;
 
@@ -221,7 +221,7 @@ mod tests {
                     .connect(Opts {
                         fastopen: false,
                         sni: "captive.apple.com".to_owned(),
-                        strcit: true,
+                        strict: true,
                     })
                     .await
                     .unwrap();
