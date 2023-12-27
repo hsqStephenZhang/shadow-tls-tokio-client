@@ -718,6 +718,7 @@ checksum = "08d43f7aa6b08d49f382cde6a7982047c3426db949b1424bc4b7ec9ae12c6ce2"
 [[package]]
 name = "rustls"
 version = "0.22.1"
+source = "git+https://github.com/hsqStephenZhang/rustls-fork-shadow-tls?rev=5584724101d7aeccdb93232859c07c22d9d37213#5584724101d7aeccdb93232859c07c22d9d37213"
 dependencies = [
  "log",
  "ring",
@@ -1007,6 +1008,7 @@ dependencies = [
 [[package]]
 name = "tokio-rustls"
 version = "0.25.0"
+source = "git+https://github.com/hsqStephenZhang/tokio-rustls-fork-shadow-tls?rev=5b1a4b413bb667a57912e5ec00476a9ec409fbc1#5b1a4b413bb667a57912e5ec00476a9ec409fbc1"
 dependencies = [
  "rustls",
  "rustls-pki-types",
